@@ -1,5 +1,5 @@
 language: php
-
+sudo: false
 before_script:
   - ls
 
