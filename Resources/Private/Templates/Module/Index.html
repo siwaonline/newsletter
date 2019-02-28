@@ -3,13 +3,16 @@
 This container handles the pageRenderer in the background
 Specifiy which js librarys should be loaded
 -->
-<newsletter:Be.moduleContainer pageTitle="Newsletter">
 
+<newsletter:Be.moduleContainer pageTitle="Newsletter">
     <!-- load needed CSS Files -->
+	<newsletter:includeCssFile name="ext-typo3.css"/>
+		<newsletter:includeCssFile name="ext-all.css"/>
     <newsletter:includeCssFile name="module.css"/>
     <newsletter:includeCssFile name="flashmessages.css"/>
     <newsletter:includeCssFile name="nv.d3.css"/>
-
+	  <newsletter:includeJsFile name="ext-base.js"/>
+	  <newsletter:includeJsFile name="ext-all.js"/>
     <!-- load needed JS Files -->
     <newsletter:includeJsFile name="DirectFlashMessageDispatcher.js"/>
 
@@ -23,11 +26,11 @@ Specifiy which js librarys should be loaded
     <newsletter:includeJsFolder name="Statistics/" recursive="true"/>
 
     <newsletter:ExtDirectProvider name="descriptor"/>
-
+		<newsletter:localization name="locallang.xlf,locallang_db.xlf"/>
+		<newsletter:configuration configuration="{configuration}"/>
     <!-- create inline JS based on the Domain Model Definitions -->
     <newsletter:includeExtOnReadyFromFile name="ExtOnReady.js"/>
-    <newsletter:localization name="locallang.xlf,locallang_db.xlf"/>
-    <newsletter:configuration configuration="{configuration}"/>
+
 
     <!-- Additional HTML required for ExtJS -->
     <newsletter:includeModuleBody>

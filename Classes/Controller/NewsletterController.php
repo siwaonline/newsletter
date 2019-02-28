@@ -140,8 +140,7 @@ class NewsletterController extends ExtDirectActionController
      *
      * @param Newsletter $newNewsletter a fresh Newsletter object which has not yet been added to the repository
      *
-     * @dontverifyrequesthash
-     * @dontvalidate $newNewsletter
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $newNewsletter
      * @ignorevalidation $newNewsletter
      */
     public function createAction(Newsletter $newNewsletter = null)

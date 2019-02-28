@@ -67,27 +67,10 @@ class Update implements SingletonInterface
 
             /** @var FlashMessage $flashMessage */
             $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $severity);
-            $output .= $this->renderFlashMessage($flashMessage);
+            $output .= $flashMessage;
         }
 
         return $output;
-    }
-
-    /**
-     * Render a FlashMessage across all TYPO3 version supported
-     *
-     * @param FlashMessage $flashMessage
-     *
-     * @return string HTML
-     */
-    private function renderFlashMessage(FlashMessage $flashMessage)
-    {
-        // From TYPO3 8.0 and higher, we can use getMessageAsMarkup(), but everything older should use render() method
-        if (is_callable([$flashMessage, 'getMessageAsMarkup'])) {
-            return $flashMessage->getMessageAsMarkup();
-        }
-
-        return $flashMessage->render();
     }
 
     /**

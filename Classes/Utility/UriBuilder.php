@@ -16,6 +16,7 @@ abstract class UriBuilder
 {
     const EXTENSION_NAME = 'newsletter';
     const PLUGIN_NAME = 'p';
+    const VENDOR_NAME = 'Ecodev';
     const PAGE_TYPE = 1342671779;
 
     /**
@@ -73,7 +74,7 @@ abstract class UriBuilder
             $GLOBALS['TSFE'] = $TSFE;
             $GLOBALS['TSFE']->initFEuser();
             $GLOBALS['TSFE']->fetch_the_id();
-            $GLOBALS['TSFE']->getPageAndRootline();
+           // $GLOBALS['TSFE']->getPageAndRootline();
             $GLOBALS['TSFE']->initTemplate();
             $GLOBALS['TSFE']->tmpl->getFileName_backPath = PATH_site;
             $GLOBALS['TSFE']->forceTemplateParsing = 1;
@@ -84,7 +85,7 @@ abstract class UriBuilder
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         if (!(isset($GLOBALS['dispatcher']) && $GLOBALS['dispatcher'] instanceof Bootstrap)) {
             $extbaseBootstrap = $objectManager->get(Bootstrap::class);
-            $extbaseBootstrap->initialize(['extensionName' => self::EXTENSION_NAME, 'pluginName' => self::PLUGIN_NAME]);
+            $extbaseBootstrap->initialize(['extensionName' => self::EXTENSION_NAME, 'pluginName' => self::PLUGIN_NAME, 'vendorName' => self::VENDOR_NAME]);
         }
 
         return $objectManager->get(\TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder::class);

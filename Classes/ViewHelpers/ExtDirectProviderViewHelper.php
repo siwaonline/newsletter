@@ -29,6 +29,9 @@ class ExtDirectProviderViewHelper extends AbstractViewHelper
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->apiService = $objectManager->get(Api::class);
+        $this->registerArgument('name', 'string', 'the file to include', false, 'remoteDescriptor');
+        $this->registerArgument('namespace', 'string', 'the namespace the variable is placed', false, 'Ext.ux.Ecodev.Newsletter.Remote');
+        $this->registerArgument('routeUrl', 'string', 'you can specify a URL that acts as router', false, null);
     }
 
     /**
@@ -36,14 +39,14 @@ class ExtDirectProviderViewHelper extends AbstractViewHelper
      * Also calls Ext.Direct.addProvider() on itself (at js side).
      * The remote API is directly useable.
      *
-     * @param string $name the name for the javascript variable
-     * @param string $namespace the namespace the variable is placed
-     * @param string $routeUrl you can specify a URL that acts as router
      */
-    public function render($name = 'remoteDescriptor', $namespace = 'Ext.ux.Ecodev.Newsletter.Remote', $routeUrl = null)
+    public function render()
     {
+        $routeUrl = $this->arguments['routeUrl'];
+        $namespace = $this->arguments['namespace'];
+        $name = $this->arguments['name'];
         if ($routeUrl === null) {
-            $routeUrl = $this->controllerContext->getUriBuilder()->reset()->build() . '&Ecodev\\Newsletter\\ExtDirectRequest=1';
+            $routeUrl = $this->renderingContext->getControllerContext()->getUriBuilder()->reset()->build() . '&Ecodev\\Newsletter\\ExtDirectRequest=1';
         }
 
         $api = $this->apiService->createApi($routeUrl, $namespace);
@@ -58,6 +61,6 @@ class ExtDirectProviderViewHelper extends AbstractViewHelper
         $jsCode .= ";\n";
         $jsCode .= 'Ext.Direct.addProvider(' . $descriptor . ');' . "\n";
         // add the output to the pageRenderer
-        $this->pageRenderer->addExtOnReadyCode($jsCode, true);
+        $this->pageRenderer->addJsInlineCode('newsletterExtOnReady', $jsCode, false, false);
     }
 }

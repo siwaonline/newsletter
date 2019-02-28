@@ -9,19 +9,29 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class LocalizationViewHelper extends AbstractViewHelper
 {
+
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('name', 'string', 'the file to include', false, "locallang.xlf");
+        $this->registerArgument('extKey', 'string', 'the extension, where the file is located', false, null);
+        $this->registerArgument('pathInsideExt', 'string', 'the path to the file relative to the ext-folder', false, 'Resources/Private/Language/');
+    }
+
+
     /**
      * Calls addJsFile on the Instance of TYPO3\CMS\Core\Page\PageRenderer.
      *
-     * @param string $name the list of file to include separated by coma
-     * @param string $extKey the extension, where the file is located
-     * @param string $pathInsideExt the path to the file relative to the ext-folder
      */
-    public function render($name = 'locallang.xlf', $extKey = null, $pathInsideExt = 'Resources/Private/Language/')
+    public function render()
     {
+        $name = $this->arguments['name'];
+        $extKey = $this->arguments['extKey'];
+        $pathInsideExt = $this->arguments['pathInsideExt'];
         $names = explode(',', $name);
 
         if ($extKey == null) {
-            $extKey = $this->controllerContext->getRequest()->getControllerExtensionKey();
+            $extKey = $this->renderingContext->getControllerContext()->getRequest()->getControllerExtensionKey();
         }
         $extPath = ExtensionManagementUtility::extPath($extKey);
 
@@ -34,7 +44,7 @@ class LocalizationViewHelper extends AbstractViewHelper
         $localizations = json_encode($localizations);
         $javascript = "Ext.ux.Ecodev.Newsletter.Language = $localizations;";
 
-        $this->pageRenderer->addJsInlineCode($filePath, $javascript);
+        $this->pageRenderer->addJsInlineCode($filePath, $javascript, false, false);
     }
 
     /**

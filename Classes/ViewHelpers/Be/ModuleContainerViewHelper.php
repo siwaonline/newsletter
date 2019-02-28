@@ -32,20 +32,25 @@ class ModuleContainerViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
+
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('pageTitle', 'string', 'title tag of the module. Not required by default, as BE modules are shown in a frame', false);
+    }
+
     /**
      * Renders start page with template.php and pageTitle.
      *
-     * @param string $pageTitle title tag of the module. Not required by default, as BE modules are shown in a frame
      *
      * @return string
      * @see template
      * @see \TYPO3\CMS\Core\Page\PageRenderer
      */
-    public function render($pageTitle = '')
+    public function render()
     {
         $doc = $this->getDocInstance();
         $this->pageRenderer->backPath = '';
-        $this->pageRenderer->loadExtJS();
 
         // From TYPO3 8.6.0 onward t3skin is located in core (see: https://forge.typo3.org/issues/79259).
         if (version_compare(TYPO3_version, '8.6.0', '>=')) {
@@ -61,7 +66,7 @@ class ModuleContainerViewHelper extends AbstractViewHelper
         $this->pageRenderer->enableCompressCss();
         $this->pageRenderer->enableConcatenateFiles();
 
-        $output = $doc->startPage($pageTitle);
+        $output = $doc->startPage($this->arguments['pageTitle'] ? $this->arguments['pageTitle']:"");
         $output .= $this->pageRenderer->getBodyContent();
         $output .= $doc->endPage();
 

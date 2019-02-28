@@ -297,7 +297,7 @@ abstract class Tools
      */
     public static function getUserAgent()
     {
-        $userAgent = TYPO3_user_agent . ' Newsletter (https://github.com/Ecodev/newsletter)';
+        $userAgent = 'Newsletter (https://github.com/Ecodev/newsletter)';
 
         return $userAgent;
     }
@@ -313,11 +313,10 @@ abstract class Tools
     {
         // Specify User-Agent header if we fetch an URL, but not if it's a file on disk
         if (Utility\Uri::isAbsolute($url)) {
-            $headers = [self::getUserAgent()];
+            $headers = [TYPO3_user_agent => self::getUserAgent()];
         } else {
             $headers = null;
         }
-
         $report = [];
         $content = GeneralUtility::getUrl($url, 0, $headers, $report);
 
