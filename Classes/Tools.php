@@ -313,6 +313,7 @@ abstract class Tools
     {
         // Specify User-Agent header if we fetch an URL, but not if it's a file on disk
         if (Utility\Uri::isAbsolute($url)) {
+            define('TYPO3_user_agent', 'User-Agent: TYPO3');
             $headers = [TYPO3_user_agent => self::getUserAgent()];
         } else {
             $headers = null;
