@@ -80,7 +80,9 @@ class BounceHandler
         $keep = Tools::confParam('keep_messages') ? '--keep ' : '';
 
         // Execute fetchtmail and ask him to pipe emails to our cli/bounce.php
-        $cli_dispatcher = PATH_typo3 . 'cli_dispatch.phpsh'; // This needs to be the absolute path of /typo3/cli_dispatch.phpsh
+        $phpCli = (Tools::confParam('path_to_php_cli') ? Tools::confParam('path_to_php_cli') : '');
+        $typo3Cli = PATH_site . Tools::confParam('path_to_typo3_cli');
+        $cli_dispatcher = $phpCli . ' ' . $typo3Cli; // This needs to be the absolute path of /vendor/bin/typo3 or /typo3/cli_dispatch.phpsh
         foreach ($servers as $server) {
             $cmd = "$fetchmail -s $keep -m \"$cli_dispatcher newsletter_bounce\" $server 2>&1";
             exec($cmd, $output, $exitStatus);
