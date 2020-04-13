@@ -16,6 +16,12 @@ append_url =
 # cat=basic; type=string; label=Path to Lynx CLI browser: This program is not required, but can be used by Newsletter to produce an acceptable plaintext conversion.
 path_to_lynx = /usr/bin/lynx
 
+# cat=basic; type=string; label=PHP cli binary - absolute path, may be omitted: This is used to call the TYPO3 cli - e.g. /usr/bin/php
+path_to_php_cli =
+
+# cat=basic; type=string; label=TYPO3 cli - path relative to document root PATH_site: This is used by fetchmail to call the command newsletter:mdabounce - e.g. typo3/cli_dispatch.phpsh or ../vendor/bin/typo3
+path_to_typo3_cli = typo3/cli_dispatch.phpsh
+
 # cat=basic; type=string; label=Path to fetchmail program: This a standard unix mail-retrieval program. It is used to collect bounced emails with.
 path_to_fetchmail = /usr/bin/fetchmail
 
