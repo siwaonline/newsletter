@@ -84,7 +84,7 @@ class BounceHandler
         $typo3Cli = PATH_site . Tools::confParam('path_to_typo3_cli');
         $cli_dispatcher = $phpCli . ' ' . $typo3Cli; // This needs to be the absolute path of /vendor/bin/typo3 or /typo3/cli_dispatch.phpsh
         foreach ($servers as $server) {
-            $cmd = "$fetchmail -s $keep -m \"$cli_dispatcher newsletter_bounce\" $server 2>&1";
+            $cmd = "$fetchmail -s $keep -m \"$cli_dispatcher newsletter:mdabounce\" $server 2>&1";
             exec($cmd, $output, $exitStatus);
 
             // Propagate fetchmail error if any so they are visible in Scheduler GUI
