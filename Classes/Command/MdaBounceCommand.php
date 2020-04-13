@@ -62,6 +62,6 @@ class MdaBounceCommand extends Command
         );
         $bounceHandler->dispatch();
 
-        $io->success($output);
+        $io->text($output);
     }
 }
