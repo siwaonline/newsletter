@@ -57,7 +57,8 @@ class MdaBounceCommand extends Command
         $content = $input->getArgument('rawmailsource');
 
         // Dispatch it to analyze its bounce level an take appropriate action
-        $bounceHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Ecodev\\Newsletter\\BounceHandler',
+        $bounceHandler = GeneralUtility::makeInstance(
+            'Ecodev\\Newsletter\\BounceHandler',
             $content
         );
         $bounceHandler->dispatch();
