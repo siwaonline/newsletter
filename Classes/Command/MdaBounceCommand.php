@@ -36,8 +36,8 @@ class MdaBounceCommand extends Command
             ->setDescription('Bounce mail handling MDA for fetchmail')
             ->addArgument(
                 'rawmailsource',
-                InputArgument::REQUIRED,
-                'Raw mail source to be piped from fetchmail'
+                InputArgument::OPTIONAL,
+                'Raw mail source'
             );
     }
 
@@ -54,7 +54,16 @@ class MdaBounceCommand extends Command
         $output = 'Handling raw mail source.';
 
         // Read piped mail raw source
-        $content = $input->getArgument('rawmailsource');
+        $content = '';
+        if ($filename = $input->hasArgument('rawmailsource')) {
+            $content = $input->getArgument('rawmailsource');
+        } else if (0 === ftell(STDIN)) {
+            while (!feof(STDIN)) {
+                $content .= fread(STDIN, 1024);
+            }
+        } else {
+            throw new \RuntimeException("Raw mail source missing: Provide it as argument or pipe it from fetchmail to STDIN.");
+        }
 
         // Dispatch it to analyze its bounce level an take appropriate action
         $bounceHandler = GeneralUtility::makeInstance(
