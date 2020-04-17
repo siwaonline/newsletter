@@ -53,11 +53,11 @@ class MdaBounceCommand extends Command
         $io->title($this->getDescription());
         $output = 'Handling raw mail source.';
 
-        // Read piped mail raw source
-        $content = '';
-        if ($filename = $input->hasArgument('rawmailsource')) {
-            $content = $input->getArgument('rawmailsource');
-        } else if (0 === ftell(STDIN)) {
+        // Read mail raw source
+        $content = $input->getArgument('rawmailsource');
+        if ($content) {
+            // okay
+        } elseif (0 === ftell(STDIN)) {
             while (!feof(STDIN)) {
                 $content .= fread(STDIN, 1024);
             }
