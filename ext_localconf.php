@@ -8,9 +8,6 @@ if (!defined('TYPO3_MODE')) {
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:newsletter/Configuration/TypoScript/setup.txt">');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:newsletter/Configuration/TypoScript/constants.txt">');
 
-// Register keys for CLI
-$TYPO3_CONF_VARS['SC_OPTIONS']['GLOBAL']['cliKeys']['newsletter_bounce'] = ['EXT:newsletter/cli/bounce.php', '_CLI_scheduler'];
-
 // Configure FE plugin element
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Ecodev.' . $_EXTKEY, 'p', [// list of controller
